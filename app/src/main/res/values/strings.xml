@@ -10,4 +10,6 @@
     <string name="failed_fetch_movie">Failed to fetch movie</string>
     <string name="something_wrong">Something Wrong</string>
     <string name="similar_movies">Similar Movies</string>
+    <string name="saved_favorite_movie">Saved to favorite movie</string>
+    <string name="removed_favorite_movie">Removed from favorite movie</string>
 </resources>

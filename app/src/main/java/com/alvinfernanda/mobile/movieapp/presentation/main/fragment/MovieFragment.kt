@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.alvinfernanda.mobile.movieapp.R
 import com.alvinfernanda.mobile.movieapp.data.model.Movie
 import com.alvinfernanda.mobile.movieapp.databinding.FragmentMovieBinding
 import com.alvinfernanda.mobile.movieapp.domain.LoadingState
@@ -96,6 +97,7 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     }
 
     override fun onClickFavorite(item: Movie) {
+        showMessage(getString(if (item.favorite) R.string.saved_favorite_movie else R.string.removed_favorite_movie))
         viewModel.updateFavorite(item)
     }
 

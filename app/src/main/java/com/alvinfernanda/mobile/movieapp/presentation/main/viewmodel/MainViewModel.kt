@@ -18,7 +18,9 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val db: DatabaseHelper by inject()
     private val _listMovies = MutableLiveData<MutableList<Movie>?>()
+    private val _favoriteMovies = MutableLiveData<MutableList<Movie>?>()
     val listMovies = _listMovies.asLiveData()
+    val favoriteMovies = _favoriteMovies.asLiveData()
 
     fun getMovies(page: Int?) {
         viewModelScope.launch(appDispatcher.io()) {
@@ -80,6 +82,17 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch(appDispatcher.io()) {
             try {
                 db.updateMovie(movie)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getFavoriteMovies() {
+        viewModelScope.launch(appDispatcher.io()) {
+            try {
+                val data = db.getFavouriteMovieList()
+                _favoriteMovies.postValue(data.toMutableList())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
