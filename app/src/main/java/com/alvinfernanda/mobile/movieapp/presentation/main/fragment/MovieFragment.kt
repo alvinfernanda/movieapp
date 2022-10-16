@@ -96,10 +96,10 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     }
 
     override fun onClickFavorite(item: Movie) {
-
+        viewModel.updateFavorite(item)
     }
 
-    fun showMessage(message: String?) {
+    private fun showMessage(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

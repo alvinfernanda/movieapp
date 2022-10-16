@@ -8,12 +8,15 @@ import com.alvinfernanda.mobile.movieapp.R
 import com.alvinfernanda.mobile.movieapp.data.base.BaseViewModel
 import com.alvinfernanda.mobile.movieapp.data.model.Movie
 import com.alvinfernanda.mobile.movieapp.domain.LoadingState
+import com.alvinfernanda.mobile.movieapp.domain.room.DatabaseHelper
 import com.alvinfernanda.mobile.movieapp.external.extension.asLiveData
 import com.alvinfernanda.mobile.movieapp.external.extension.notNull
 import kotlinx.coroutines.launch
+import org.koin.core.component.inject
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
+    private val db: DatabaseHelper by inject()
     private val _listMovies = MutableLiveData<MutableList<Movie>?>()
     val listMovies = _listMovies.asLiveData()
 
@@ -26,7 +29,13 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                     response.body().notNull {
                         val result = response.body()?.results
                         result?.forEach { it.page = page }
-                        _listMovies.postValue(result)
+                        val movieDb = db.getMovieList(page).toMutableList()
+                        if (movieDb.isEmpty()) {
+                            _listMovies.postValue(result)
+                            db.insertMovieList(result!!)
+                        } else {
+                            _listMovies.postValue(movieDb)
+                        }
                     }
                 } else {
                     _loadingState.postValue(LoadingState.error(context.getString(R.string.failed_fetch_movie)))
@@ -46,9 +55,15 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                     response.body().notNull {
                         val results = response.body()?.results
                         results?.forEach { it.page = page }
+                        val movieDb = db.getMovieList(page).toMutableList()
                         val movies = _listMovies.value
                         movies?.let {
-                            it.addAll(results!!)
+                            if (movieDb.isEmpty()) {
+                                it.addAll(results!!)
+                                db.insertMovieList(results)
+                            } else {
+                                it.addAll(movieDb)
+                            }
                             _listMovies.postValue(it)
                         }
                     }
@@ -57,6 +72,16 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                 }
             } catch (e: Exception) {
                 _loadingState.postValue(LoadingState.error(context.getString(R.string.something_wrong)))
+            }
+        }
+    }
+
+    fun updateFavorite(movie: Movie) {
+        viewModelScope.launch(appDispatcher.io()) {
+            try {
+                db.updateMovie(movie)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
