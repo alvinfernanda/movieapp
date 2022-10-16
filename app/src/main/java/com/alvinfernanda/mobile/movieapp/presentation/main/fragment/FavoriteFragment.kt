@@ -9,20 +9,19 @@ import com.alvinfernanda.mobile.movieapp.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment() {
 
-    private var _binding: FragmentFavoriteBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentFavoriteBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        binding = FragmentFavoriteBinding.inflate(LayoutInflater.from(context))
+        return binding?.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }

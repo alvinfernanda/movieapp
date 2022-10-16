@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alvinfernanda.mobile.movieapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MovieApplication"
         android:allowBackup="true"
@@ -24,6 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.detail.view.DetailActivity"
+            android:exported="false" />
 
     </application>
 
