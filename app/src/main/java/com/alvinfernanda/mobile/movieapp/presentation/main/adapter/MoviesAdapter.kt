@@ -51,6 +51,9 @@ class MoviesAdapter(
                 binding.ivPoster.setOnClickListener {
                     clickListener.onClick(item)
                 }
+                binding.tvDesc.setOnClickListener {
+                    clickListener.onClick(item)
+                }
                 showMore(lastItem)
             }
         }

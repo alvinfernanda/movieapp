@@ -1,6 +1,7 @@
 package com.alvinfernanda.mobile.movieapp.external.extension
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -29,6 +30,10 @@ inline fun <T : Any> T?.notNull(f: (it: T) -> Unit) {
 }
 
 fun <T> MutableLiveData<T>.asLiveData() = this as LiveData<T>
+
+fun View.setVisibleIf(condition: Boolean) {
+    visibility = if (condition) View.VISIBLE else View.GONE
+}
 
 fun ImageView.loadImage(url: String?) {
     try {
