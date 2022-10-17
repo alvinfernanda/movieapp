@@ -5,10 +5,12 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMovie"
         android:layout_width="@dimen/space_150"
-        android:layout_height="@dimen/space_120"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_small"
         app:cardCornerRadius="@dimen/space_small"
+        app:cardUseCompatPadding="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

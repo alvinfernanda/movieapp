@@ -22,7 +22,7 @@ class MoviesAdapter(
     }
 
     private fun getLastItemPosition(): Int = itemCount - 1
-
+    // Check if the position of the item is last
     private fun isLastItem(position: Int): Boolean = position == getLastItemPosition()
 
     fun setList(items: MutableList<Movie>) =
@@ -64,6 +64,7 @@ class MoviesAdapter(
 
         private fun showMore(lastItem: Boolean) {
             if (lastItem) {
+                // Call show more callback if the item is last item
                 showMoreCallBack.showMore()
             }
         }
@@ -74,6 +75,7 @@ class MoviesAdapter(
         fun onClickFavorite(item: Movie)
     }
 
+    // Check the unique of item
     object DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(
             oldItem: Movie,

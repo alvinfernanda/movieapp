@@ -25,8 +25,8 @@
                 <ImageView
                     android:id="@+id/ivPoster"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_200"
-                    android:scaleType="centerCrop"
+                    android:layout_height="@dimen/space_250"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_default" />
 
                 <ImageView
@@ -108,5 +108,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <include
+        android:id="@+id/layoutLoading"
+        layout="@layout/layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/no_space"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

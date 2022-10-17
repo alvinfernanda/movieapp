@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/space_small"
         android:elevation="@dimen/space_semi_tiny"
+        app:cardUseCompatPadding="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

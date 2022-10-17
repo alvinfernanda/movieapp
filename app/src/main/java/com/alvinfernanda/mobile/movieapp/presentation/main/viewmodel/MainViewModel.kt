@@ -16,7 +16,6 @@ import org.koin.core.component.inject
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
-    private val db: DatabaseHelper by inject()
     private val _listMovies = MutableLiveData<MutableList<Movie>?>()
     private val _favoriteMovies = MutableLiveData<MutableList<Movie>?>()
     val listMovies = _listMovies.asLiveData()
@@ -28,14 +27,18 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                 _loadingState.postValue(LoadingState.LOADING)
                 val response = repository.getMovies(page).await()
                 if (response.isSuccessful) {
+                    _loadingState.postValue(LoadingState.LOADED)
                     response.body().notNull {
                         val result = response.body()?.results
+                        // Insert page value for each item
                         result?.forEach { it.page = page }
                         val movieDb = db.getMovieList(page).toMutableList()
                         if (movieDb.isEmpty()) {
+                            // List movies return value from API and insert it into database
                             _listMovies.postValue(result)
                             db.insertMovieList(result!!)
                         } else {
+                            // List movies return value from database
                             _listMovies.postValue(movieDb)
                         }
                     }
@@ -54,12 +57,14 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                 _loadingState.postValue(LoadingState.LOADING)
                 val response = repository.getMovies(page).await()
                 if (response.isSuccessful) {
+                    _loadingState.postValue(LoadingState.LOADED)
                     response.body().notNull {
                         val results = response.body()?.results
                         results?.forEach { it.page = page }
                         val movieDb = db.getMovieList(page).toMutableList()
                         val movies = _listMovies.value
                         movies?.let {
+                            // Add list movies value to existing data
                             if (movieDb.isEmpty()) {
                                 it.addAll(results!!)
                                 db.insertMovieList(results)
@@ -78,6 +83,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    // Update favorite movie in database
     fun updateFavorite(movie: Movie) {
         viewModelScope.launch(appDispatcher.io()) {
             try {
@@ -88,6 +94,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    // Get favorite movies from database
     fun getFavoriteMovies() {
         viewModelScope.launch(appDispatcher.io()) {
             try {

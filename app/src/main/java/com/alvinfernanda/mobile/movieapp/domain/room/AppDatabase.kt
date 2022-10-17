@@ -6,7 +6,7 @@ import com.alvinfernanda.mobile.movieapp.data.dao.MovieDao
 import com.alvinfernanda.mobile.movieapp.data.model.Movie
 
 @Database(
-    version = 1, exportSchema = false, entities = [
+    version = 2, exportSchema = false, entities = [
         Movie::class
     ]
 )

@@ -17,4 +17,5 @@ data class Movie(
     @ColumnInfo(name = "overview") val overview: String?,
     @ColumnInfo(name = "release_date") val release_date: String?,
     @ColumnInfo(name = "favorite") var favorite: Boolean = false,
+    @ColumnInfo(name = "movie_id") var movie_id: Int?,
 ) : Parcelable

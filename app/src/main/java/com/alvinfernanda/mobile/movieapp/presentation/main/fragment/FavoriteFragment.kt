@@ -38,6 +38,7 @@ class FavoriteFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     }
 
     private fun requestData() {
+        // Get favorite movies from database
         viewModel.getFavoriteMovies()
     }
 
@@ -67,6 +68,7 @@ class FavoriteFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     override fun onClickFavorite(item: Movie) {
         showMessage(getString(if (item.favorite) R.string.saved_favorite_movie else R.string.removed_favorite_movie))
         viewModel.updateFavorite(item)
+        // Reques new data from db every time there is favorite change
         requestData()
     }
 

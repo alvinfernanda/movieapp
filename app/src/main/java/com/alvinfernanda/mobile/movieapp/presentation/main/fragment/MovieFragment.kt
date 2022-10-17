@@ -47,6 +47,7 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     }
 
     private fun initObserver() {
+        // Observe loading state from view model
         viewModel.loadingState.observe(viewLifecycleOwner) {
             when (it.status) {
                 LoadingState.Status.RUNNING -> showLoading(true)
@@ -59,6 +60,7 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
                 }
             }
         }
+        // Observe list movies value from view model then insert it into adapter
         viewModel.listMovies.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) setupMovies(mutableListOf()) else setupMovies(it)
         }
@@ -75,7 +77,6 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     }
 
     private fun setupMovies(movies: MutableList<Movie>) {
-        binding?.loader?.visibility = View.GONE
         moviesAdapter.setList(movies)
         binding?.tvEmpty?.setVisibleIf(movies.isEmpty())
     }
@@ -83,12 +84,14 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        // Returns the value of page as before
         page = 1
     }
 
     override fun showMore() {
-        binding?.loader?.visibility = View.VISIBLE
+        // Increase value of the page every time there is a callback from adapter
         page += 1
+        // Call show more function
         viewModel.showMore(page)
     }
 
@@ -98,6 +101,7 @@ class MovieFragment : Fragment(), MoviesAdapter.Listener, ShowMoreCallBack {
 
     override fun onClickFavorite(item: Movie) {
         showMessage(getString(if (item.favorite) R.string.saved_favorite_movie else R.string.removed_favorite_movie))
+        // Update favorite value in database
         viewModel.updateFavorite(item)
     }
 

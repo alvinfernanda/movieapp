@@ -8,6 +8,7 @@
     <string name="empty_text">Empty data</string>
     <string name="release_date">Release Date : %s</string>
     <string name="failed_fetch_movie">Failed to fetch movie</string>
+    <string name="failed_fetch_similar_movie">Failed to fetch similar movie</string>
     <string name="something_wrong">Something Wrong</string>
     <string name="similar_movies">Similar Movies</string>
     <string name="saved_favorite_movie">Saved to favorite movie</string>

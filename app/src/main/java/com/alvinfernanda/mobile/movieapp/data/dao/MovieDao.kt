@@ -14,6 +14,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE favorite = '1'")
     fun getFavouriteMovieList(): List<Movie>
 
+    @Query("SELECT * FROM movie WHERE movie_id = :movieId")
+    fun getSimilarMovies(movieId: Int?): List<Movie>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovieList(movies: List<Movie>)
 
